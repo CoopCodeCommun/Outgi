@@ -3,7 +3,7 @@ from django.urls import path, include
 from .views import contacts, lazy_loading_profil_image, \
     reload_contact_from_odoo, odoo_account, reload_account_from_odoo, \
     AccountAnalyticGroupAPI, OdooContactsAPI, julienjs_suivi_budgetaire, edit_tableau_generique
-from .views import index, suivi_budgetaire, subventions, organigramme, repertoire, objectifs_indicateurs, api_exemple, tableau_de_bord_perso
+from .views import index, suivi_budgetaire, send_subventions, organigramme, repertoire, objectifs_indicateurs, api_exemple, tableau_de_bord_perso
 from rest_framework import routers
 
 router = routers.DefaultRouter()
@@ -30,7 +30,7 @@ urlpatterns = [
     # A bosser :)
     path('organigramme/', organigramme, name='organigramme'),
     path('tableau_de_bord_perso/', tableau_de_bord_perso, name='tableau_de_bord_perso'),
-    path('subventions/', subventions, name='subventions'),
+    path('subventions/', send_subventions, name='subventions'),
     path('repertoire/', repertoire, name='repertoire'),
     path('objectifs_indicateurs/', objectifs_indicateurs, name='objectifs_indicateurs'),
 

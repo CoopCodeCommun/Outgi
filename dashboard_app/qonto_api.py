@@ -180,7 +180,7 @@ class QontoApi():
                     )
                     # TODO: Update ?
                 except Transaction.DoesNotExist:
-                    category = Category.objects.get_or_create(name=transaction.get('category'))[0]
+                    category = Category.objects.get_or_create(name=transaction.get('type'))[0]
                     side = 'C' if transaction.get('side') == 'credit' else 'D'
 
                     initiator = transaction.get('initiator_id')

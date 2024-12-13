@@ -1,3 +1,6 @@
+# calling data from DB
+from .models import Groupe, Pole, Cost, PrevisionCost
+
 class data():
    
    #les paramètres sont de base en False, et mis en True si actifs
@@ -65,18 +68,24 @@ class data():
     
 ################## suivi budgétaire détaillé ################
     ####  dépenses ###
+   # creating a list with Caring prevision cost data
+
+    #import ipdb; ipdb.set_trace()
     bienveillance_prev = {
         "slug": "recap_recettes",
         "titre": "",
         "colonnes": [
-            {'nom':'', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des intulés 
-            {'nom':'montant', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des montants 
+            {'nom':'', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des intulés
+            {'nom':'montant', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des montants
         ],
+
         "lignes": [
-            ['garant du cadre', 100],
-            ['ref budget', 100],
-            ['ref communication', 100],
-        ],
+
+                    ['Garant du cadre', 100],
+                    ['ref budget', 100],
+                    ['ref communication', 100],
+            ],
+
         "total": True,
     }
 
@@ -105,8 +114,8 @@ class data():
         "slug": "recap_recettes",
         "titre": "",
         "colonnes": [
-            {'nom':'', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des intulés 
-            {'nom':'montant', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des montants 
+            {'nom':'', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des intulés
+            {'nom':'montant', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des montants
         ],
         "lignes": [
             ['animation ateliers', 530],
@@ -185,7 +194,7 @@ class data():
         "titre": "",
         "colonnes": [
             {'nom':'', 'list': True}, #liste déroulante des projets
-            {'nom':'date', 'input': True, 'total': False}, #date à rentrer par un bienveillant
+            {'nom':'date', 'date': True, 'total': False}, #date à rentrer par un bienveillant
             {'nom':'montant', 'input': True}, #montant à rentrer par un bienveillant
         ],
         "lignes": [
@@ -197,33 +206,34 @@ class data():
 
     ####  recettes ###
 
-    subvention_prev = {
-        "slug": "recap_recettes",
-        "titre": "",
+    subvention_donne_de_base= {
+        "slug": "donnees_de_base",
+        "titre": "Données de base",
         "colonnes": [
-            {'nom':'' }, #l'intitulé vient directement du tableau subventions
-            {'nom':'montant'}, #le montant viens du tableau subventions
+            {'nom':'', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des intulés 
+            {'nom':'montant', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des montants 
         ],
         "lignes": [
-            ['micro-recylerie','1000€'],
-            ['Culture', '2000€'],
-            ['commun', '2000€'],
+            ['Région - investissement', 10,20,3,30],
+            ['mairie - fonctionnement', 22,33,44,55],
         ],
         "total": True,
     }
 
 #ce tableau est relié à la page subventions
-    subvention_reel = { 
-        "slug": "recap_recettes",
-        "titre": "",
+    subvention_historique = {
+        "slug": "historique",
+        "titre": "Historique",
         "colonnes": [
-                    {'nom':'',}, 
-                    {'nom':'date', 'total': False },
-                    {'nom':'montant',},
+                    {'nom':''},
+                    {'nom':'Demandée le'},
+                    {'nom':'Acceptée le'},
+                    {'nom':'Notifié le'},
+                    {'nom':'référence'},
         ],
         "lignes": [
-            ['micro-recylerie', '03/05/23','1000€'],
-            ['Culture', '03/05/23', '2000€'],
+            ['Région - investissement', 9,8,7,6],
+            ['mairie - fonctionnement', 11,12,13,14],
         ],
         "total": True,
     }
@@ -237,7 +247,7 @@ class data():
              
         ],
         "lignes": [
-            ['micro-recylerie','1000€'],
+            ['micro-recylerie','9800€'],
             ['Culture', '2000€'],
             ['commun', '2000€'],
         ],
@@ -298,7 +308,7 @@ class data():
         ],
         "lignes": [
             ['micro-recylerie','1000€'],
-            ['Culture', '2000€'],
+            ['Culture', '666€'],
             ['commun', '2000€'],
         ],
         "total": True,
@@ -384,6 +394,23 @@ class data():
         "total": False,
     }
 
+
+membres_du_collectifcccccc = {
+        "slug": "membres_du_collectif",
+        "titre": "",
+        "colonnes": [
+            {'nom':'', 'list': True, }, # liste qui vient de l'organigramme
+            {'nom':'A valider', 'total':True}, #total des colones A valider (bienveillance et presta interne) du suivi détaillé
+            {'nom':'A facturer', 'total':True},  #total des colones A Facturer (bienveillance et presta interne) du suivi détaillé
+            {'nom':'A Payer', 'total':True }, #total des colones A Payé (bienveillance et presta interne) du suivi détaillé
+        ],
+        "lignes": [
+            ['Jacques', 10, 20, 20],
+            ['Camille', 10, 20, 40],
+            ['Jacqueline', 10, 20, 10],
+        ],
+        "total": True,
+    }
 
        
 

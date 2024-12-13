@@ -10,17 +10,18 @@
     <div class="col-md-5 m-2 p-2 case rose">
         {% include 'dashboard/section_generique.html' with titre='Subventions' %}
         <div style="width: 100%; overflow-x: auto;">
-            {% include 'dashboard/tableau_generique.html' with table=data.subventions %}
-            
+            {% include 'dashboard/tableau_generique.html' with table=data.subvention_donne_de_base %}
         </div>
     </div>
     <div class="col-md-5 m-2 p-2 case orange">
         {% include 'dashboard/section_generique.html' with titre='Référents' %}
         <div style="width: 100%; overflow-x: auto;">
-            {% include 'dashboard/tableau_generique.html' with table=data.subvention_historique %}
+            {% include 'dashboard/tableau_generique.html' with table=data.subventions %}
             
         </div>
     </div>
 </section>
+
+
 
 {% endblock content %}

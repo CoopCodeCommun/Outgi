@@ -23,6 +23,7 @@ faker = "^19.3.0"
 django-tables2 = "^2.6.0"
 requests = "^2.31.0"
 cryptography = "^41.0.4"
+stripe = "^8.2.0"
 
 
 [build-system]

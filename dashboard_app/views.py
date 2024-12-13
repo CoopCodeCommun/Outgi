@@ -9,13 +9,25 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from dashboard_app.data import data
-
+from .models import PrevisionCost
 from dashboard_app.models import Contact, AccountAccount, AccountJournal, AccountAnalyticGroup, AccountAnalyticAccount, \
-    Badge, DepensesBienveillance
+    RealCostInternSpending, RealCost, RealCostExternService, PrestationsVentsRecettesInt, Grant,Badge, DepensesBienveillance
 from dashboard_app.odoo_api import OdooApi
 from dashboard_app.serializers import UserSerializer
 from .serializers import AccountAnalyticGroupSerializer
 from dashboard_app.models import AccountAccount
+
+# We'll create a fonction that will return a dictionary in the form adapted to
+# the generale tables
+def create_dict_with_data(slug_name, colonnes,lignes, total,titre_colonne=""):
+
+    return {
+        "slug": slug_name,
+        "titre": titre_colonne,
+        "colonnes": colonnes,
+        "lignes": lignes,
+        "total": total,
+    }
 
 
 def index(request):
@@ -42,17 +54,131 @@ def edit_tableau_generique(request, table, index):
     ligne = table['lignes'][index]
     if request.GET.get('edit'):
         return render(request, 'dashboard/tableau_generique_ligne_edit.html', context={'ligne':ligne, 'table':table, 'index':index})
-    else :
+    else:
         return render(request, 'dashboard/tableau_generique_ligne_read.html', context={'ligne':ligne, 'table':table, 'index':index})
 
+# methode generique qui va envoyer tous les données
 def suivi_budgetaire(request):
-    #### DEBUT DU CONTROLEUR
+    # the data0 dictionary will serve gatherign data of different cases
+    data0 = {}
+    # On va recupperer toute les données de prevision pour les filtrer par la suite
+    prevision_costs = PrevisionCost.objects.all()
+    # Créons une liste avec les listes des données pour les lignes
+    bienveillance_prevision_list = [[x.titled, str(x.amount)] for x in prevision_costs.filter(type__type='CAR')]
+    # base de colonnes pour les suivies budgetaires prévisions
+    col_prevision = [
+            # A verifier s'il faut 'list': True  OU 'input': True ???
+            {'nom':'','list': True},
+            {'nom':'montant', 'input': True}
+        ]
+    # creons la bd pour bienveillance prevision
+    data0['bienveillance_prev'] = create_dict_with_data( "recap_recettes", col_prevision,bienveillance_prevision_list, True)
+
+    # creons une liste pour presta intern prevision
+    presta_int_prev_list = [[x.titled, str(x.amount)] for x in prevision_costs.filter(type__type='IN_S')]
+    # creons la bd pour prestations internes prevision
+    data0['presta_int_prev'] = create_dict_with_data('recap_recettes',col_prevision, presta_int_prev_list, True)
+
+    # creons une liste pour les presta externs prevision
+    presta_ext_prev_list = [[x.titled, str(x.amount)] for x in prevision_costs.filter(type__type='EX_S')]
+    # creons la bd pour les prestations externes prevision
+    data0['presta_ext_prev'] = create_dict_with_data('recap_recettes',col_prevision, presta_ext_prev_list, True)
+
+    # creons une liste pour les presta externs prevision
+    depenses_int_prev_list = [[x.titled, str(x.amount)] for x in prevision_costs.filter(type__type='SP_I')]
+    # creons la bd pour les prestations externes prevision
+    data0['depenses_int_prev'] = create_dict_with_data('recap_recettes',col_prevision, depenses_int_prev_list, True)
+
+
+    # ajoutons les depenses réeles internes
+    # Nous devrons tout d'abourd ajouter une nouvelle variable colones basé
+    # sur les colone previsions
+
+    col_with_date_amaunt = [
+        {'nom':'','list': True},
+        {'nom':'date', 'date': True, 'total': False},
+        {'nom':'montant', 'input': True}
+    ]
+    # creons une liste pour les presta externs prevision
+    depenses_int_real_list = [[x.pole.name, x.date_cost,str(x.amount)] for x in RealCostInternSpending.objects.filter(type__type='SP_I')]
+    # creons la bd pour les prestations externes prevision
+    data0['depenses_int_reel'] = create_dict_with_data('recap_recettes',col_with_date_amaunt, depenses_int_real_list, True)
+
+    # On va recupperer les données de coûts reels
+    # pour les filtrer par la suite
+    real_cost = RealCost.objects.all()
+    # Creaons une liste des données qu'on va afficher dans le table
+    # bienveillance réel
+    bienveillance_reel_list = [[x.user.username, x.date, str(x.proposition), x.validated, x.invoiced, x.paid] for x in real_cost.filter(type__type='CAR')]
+    col_dep_reel = [
+            {'nom':''}, #les bienveillants peuvent selectionné un nom si il créé une nouvelle ligne
+            {'nom':'date', 'input': True, 'total': False}, #les bienveillants peuvent remplir une date
+            {'nom':'propo.' , 'input': True}, #les bienveillants peuvent remplir un un montant
+            {'nom':'validé', 'input': True}, #les bienveillants peuvent valider
+            {'nom':'factu.', 'input': True}, #les bienveillants peuvent valider
+            {'nom':'payé'}, #si la facture est "payé" dans odoo, la checkbox est True, il y aura un peu de réflexion à avoir pour voir comment associé une proposition à une facture odoo
+    ]
+    # Creons le Bd pour la bienveillance reel
+    data0['bienveillance_reel'] = create_dict_with_data('recap_recettes',col_dep_reel, bienveillance_reel_list, True)
+
+    # Creaons une liste des données qu'on va afficher dans le table
+    # presta interne reel
+    presta_int_reel_list = [[x.user.username, x.date, str(x.proposition), x.validated, x.invoiced, x.paid] for x in real_cost.filter(type__type='IN_S')]
+    # creons la Bd pour presta intern reel
+    data0['presta_int_reel'] = create_dict_with_data('recap_recettes',col_dep_reel, presta_int_reel_list, True)
+
+
+    # Creons colonnes pour dépenses externes réels
+    col_dep_reel_ext = [
+            {'nom':''},  #le nom des facture de tout les articles sauf co-rem et presta int
+            {'nom':'intitulé'}, #l'intitulé des facture
+            {'nom':'date', 'total': False}, #date des factures
+            {'nom':'validé',},#si la facture est "validé" dans odoo, la checkbox est True, c'est une checkbox non modifiable par l'utilisateur
+            {'nom':'payé',}, #si la facture est "payé" dans odoo, la checkbox est True, c'est une checkbox non modifiable par l'utilisateur
+        ]
+    # applons la bd des prestations externes reeles
+    real_cost_spendings = RealCostExternService.objects.all()
+    #créons la liste avec les dépenses externes réeles
+    presta_ext_reel_list = [[ x.contact.name, x.titled, x.date, x.validated, x.payed] for x in real_cost_spendings]
+    data0['presta_ext_reel'] = create_dict_with_data('recap_recettes',col_dep_reel_ext, presta_ext_reel_list, True)
+
+
+    #Creating the basics for Recettes tables (prevision or reel)
+    # Prestation previsionel, calling the data
+    prestations_vents_recettes_int = PrestationsVentsRecettesInt.objects.all()
+    # créons le liste avec les prestations prevision
+    presta_prev_list = [[ x.group.name, str(x.montant)] for x in prestations_vents_recettes_int.filter(prev_ou_reel='P', recette__type='P')]
+    data0['presta_prev'] = create_dict_with_data('recap_recettes', col_prevision, presta_prev_list, True)
+
+    # créons le liste avec les ventes prevision
+    vente_prev_list = [[ x.group.name, str(x.montant)] for x in prestations_vents_recettes_int.filter(prev_ou_reel='P', recette__type='V')]
+    data0['vente_prev'] = create_dict_with_data('recap_recettes', col_prevision, vente_prev_list, True)
+
+    # créons le liste avec les recettes internes
+    recettes_int_prev_list = [[ x.group.name, str(x.montant)] for x in prestations_vents_recettes_int.filter(prev_ou_reel='P', recette__type='R_IN')]
+    data0['recettes_int_prev'] = create_dict_with_data('recap_recettes', col_prevision, recettes_int_prev_list, True)
+
+    # Recettes reeles
+    # Creation de la liste avec recettes prestation
+    presta_reel_list = [[ x.group.name, str(x.date), str(x.montant)] for x in prestations_vents_recettes_int.filter(prev_ou_reel='R', recette__type='P')]
+    data0['presta_reel'] = create_dict_with_data('recap_recettes', col_with_date_amaunt, presta_reel_list, True)
+
+    # Ventes reeles
+    # Creation de la liste avec recettes ventes
+    vente_reel_list = [[ x.group.name, str(x.date), str(x.montant)] for x in prestations_vents_recettes_int.filter(prev_ou_reel='R', recette__type='V')]
+    data0['vente_reel'] = create_dict_with_data('recap_recettes', col_with_date_amaunt, vente_reel_list, True)
+
+    # recettes internes reeles
+    # Creation de la liste avec recettes internes
+    recettes_int_reel_list = [[ x.group.name, str(x.date), str(x.montant)] for x in prestations_vents_recettes_int.filter(prev_ou_reel='R', recette__type='R_IN')]
+    data0['recettes_int_reel'] = create_dict_with_data('recap_recettes', col_with_date_amaunt, recettes_int_reel_list, True)
+
     base_template = "dashboard/partial.html" if request.htmx else "dashboard/base.html"
     context = {
         'base_template': base_template,
         'data': data,
+        'data0': data0,
     }
-
     return render(request, 'dashboard/pages_html/suivi_budgetaire.html', context=context)
 
 
@@ -63,12 +189,28 @@ def tableau_de_bord_perso(request):
     return render(request, 'tableau_de_bord_perso.html', context=context)
 
 
-def subventions(request):
+def send_subventions(request):
+    data0 = {}
+    # Cherchons les données de la table subvention (Grant)
+    subventions = Grant.objects.all()
+    # Creat list of subventions for données de base
+    subvention_donne_de_base_list = [[x.label, x.referee, x.partnaire, x.notification_date, x.reference] for x in subventions]
+    # create the columns
+    col_sub_base = [{'nom':''}, {'nom':'Référent'}, {'nom':'Partenaire'}, {'nom':'service'}, {'nom':'référence'}]
+    # creating the dictionary with the data
+    data0['subvention_donne_de_base'] = create_dict_with_data('donnees_de_base',col_sub_base,subvention_donne_de_base_list, True)
+
+    # Subvention history part
+    # Create history list
+    subvention_historique_list = [[x.request_date, x.acceptation_date, x.notification_date, x.reference] for x in subventions]
+    # column of history list
+    col_history = [{'nom':''}, {'nom':'Demandée le'}, {'nom':'Acceptée le'}, {'nom':'Notifié le'}, {'nom':'référence'}]
+    subvention_historique = create_dict_with_data('historique', col_history,subvention_historique_list,True)
+
     base_template = "dashboard/partial.html" if request.htmx else "dashboard/base.html"
     context = {
         'base_template': base_template,
-        'data': data
-        #'name': request.user.email if request.user.is_authenticated else 'Anonymous',
+        'name': request.user.email if request.user.is_authenticated else 'Anonymous',
     }
     return render(request, 'dashboard/pages_html/subventions.html', context=context)
 
