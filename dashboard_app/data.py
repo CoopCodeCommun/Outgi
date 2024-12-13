@@ -14,17 +14,18 @@ class data():
         "titre": "",
         "colonnes": [
             {'nom':'', 'list': True, }, # liste qui vient de l'organigramme
-            {'nom':'A valider', 'total':True}, #total des colones A valider (bienveillance et presta interne) du suivi détaillé
-            {'nom':'A facturer', 'total':True},  #total des colones A Facturer (bienveillance et presta interne) du suivi détaillé
-            {'nom':'A Payer', 'total':True }, #total des colones A Payé (bienveillance et presta interne) du suivi détaillé
+            {'nom':'A valider', 'total':True}, #total des colonnes A valider (bienveillance et presta interne) du suivi détaillé
+            {'nom':'A facturer', 'total':True},  #total des colonnes A Facturer (bienveillance et presta interne) du suivi détaillé
+            {'nom':'A Payer', 'total':True }, #total des colonnes A Payé (bienveillance et presta interne) du suivi détaillé
         ],
         "lignes": [
-            ['Jacques', 10, 20, 20],
+            ['Jacques', 30, 20, 20],
             ['Camille', 10, 20, 40],
             ['Jacqueline', 10, 20, 10],
         ],
         "total": True,
     }
+    
 
     recap_depenses = {
         "slug": "recap_depenses",
@@ -62,7 +63,7 @@ class data():
         "total": True,
     }
     
-################## suivi budgétaire détaillé ################""
+################## suivi budgétaire détaillé ################
     ####  dépenses ###
     bienveillance_prev = {
         "slug": "recap_recettes",
@@ -84,8 +85,8 @@ class data():
         "titre": "",
         "colonnes": [
             {'nom':''}, #les bienveillants peuvent selectionné un nom si il créé une nouvelle ligne
-            {'nom':'date', 'input': True, 'total': False}, #les bienveillants peuvent remplir une date
-            {'nom':'propo.' , 'input': True}, #les bienveillants peuvent remplir un un montant
+            {'nom':'date', 'input': True, 'total': True}, #les bienveillants peuvent remplir une date
+            {'nom':'propo.' , 'input': True, 'total': False}, #les bienveillants peuvent remplir un un montant
             {'nom':'validé', 'input': True}, #les bienveillants peuvent valider
             {'nom':'factu.', 'input': True}, #les bienveillants peuvent valider
             {'nom':'payé'}, #si la facture est "payé" dans odoo, la checkbox est True, il y aura un peu de réflexion à avoir pour voir comment associé une proposition à une facture odoo
@@ -200,8 +201,8 @@ class data():
         "slug": "recap_recettes",
         "titre": "",
         "colonnes": [
-            {'nom':'', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des intulés 
-            {'nom':'montant', 'input': True}, #les membres du collectif ayant le caractére bienveillant dans l'organigramme, peuvent ajouter des montants 
+            {'nom':'' }, #l'intitulé vient directement du tableau subventions
+            {'nom':'montant'}, #le montant viens du tableau subventions
         ],
         "lignes": [
             ['micro-recylerie','1000€'],
@@ -337,6 +338,7 @@ class data():
             ['Bob', True, False, True, False ],
             ['John', True, False, False, True ],
             ['Suzy', True, False, False, False ],
+            ['John', True, False, False, False ],
         ],
         "total": False,
         "ajouter_ligne" : True,
@@ -351,16 +353,15 @@ class data():
         "colonnes": [
                     {'nom':'projet concerné', 'input': True}, #projet concerné par la subvention
                     {'nom':'intitulé', 'input': True}, #nom de la subvention, rempli par le référent
-                    {'nom':'référent'}, #corespond au référent inscrit dans l'organigramme
+                    {'nom':'référent', 'input': True}, #corespond au référent inscrit dans l'organigramme
                     {'nom':'partenaire', 'input': True}, #rempli par l'admin
                     {'nom':'service', 'input': True}, #rempli par l'admin
                     {'nom':'montant', 'input': True}, #rempli par l'admin
         ],
         "lignes": [
             ['micro-forêt', 'economik', 'Marc', 'OFB', '', '22 500€'],
-            ['micro-forêt', 'economik', 'Marc', 'OFB', '', '22 500€'],
-            ['micro-forêt', 'economik', 'Marc', 'OFB', '', '22 500€'],
-            ['micro-forêt', 'economik', 'Marc', 'OFB', '', '22 500€'],
+            ['édition', 'machine estampe', 'Julien', 'Dac réunion', 'Culture', '8000€'],
+            ['Travailler autrement', 'contrat de revitalisation', 'Claire', 'Air France', '', '8000€'],
         ],
         "total": False,
         "ajouter_ligne" : False,
@@ -380,7 +381,7 @@ class data():
             ['Région - investissement', 9,8,7,6],
             ['mairie - fonctionnement', 11,12,13,14],
         ],
-        "total": True,
+        "total": False,
     }
 
 
