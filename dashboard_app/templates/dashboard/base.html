@@ -4,40 +4,41 @@
 <html lang="fr">
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="{% static 'css/main.css' %}"/>
-    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.5.2.3.min.css' %}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">    
+    <link rel="stylesheet" href="{% static 'bootstrap/bootstrap.5.2.3.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/tailwind.output.css' %}">
+
+
     <title>Dashboard Raffinerie</title>
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 
-<div class="container-fluid">
-    {% include 'dashboard/navbar.html' %}
-    <div class="row">
-        <!-- Menu Lateral -->
-        <div id="menu_lateral" class="col-md-2 ">
-            {% include 'dashboard/menu_lateral.html' %}
-        </div>
-        <!-- Contenu de la page -->
-        <div id="main" class="col-md-10 ">
-            {% block content %}
-            {% endblock content %}
+    <div class="container-fluid">
+        {% include 'dashboard/navbar.html' %}
+        <div class="d-flex">
+    
+            <!-- Menu Lateral -->
+            <div id="menu_lateral" class="p-2">
+                {% include 'dashboard/menu_lateral.html' %}
+            </div>
+    
+            <!-- Contenu de la page -->
+            <div id="main" class="flex-grow-1 p-2">
+                {% block content %}
+                {% endblock content %}
+            </div>
+    
         </div>
     </div>
-</div>
+    
+    {% block script %}
+    {% endblock script %}
 
-{% block script %}
-{% endblock script %}
-
-{#Julien.js#}
-{#<script src='{% static "js/datas_new.js" %}' type="application/javascript"></script>#}
-{#<script src='{% static "js/main_new.js" %}' type="application/javascript"></script>#}
-
-<!-- Bootstrap JS, Popper.js, and jQuery -->
-{#<script src="{% static 'js/jquery_3.5.1.js' %}" type="application/javascript"></script>#}
-<script src="{% static 'js/hyperscript.0.9.11.min.js' %}" type="application/javascript"></script>
-<script src="{% static 'js/htmx.min.1.9.7.js' %}" type="application/javascript"></script>
-<script src="{% static 'bootstrap/bootstrap.5.2.3.bundle.min.js' %}" type="application/javascript"></script>
+    <!-- Scripts -->
+    <script src="{% static 'js/hyperscript.0.9.11.min.js' %}" type="application/javascript"></script>
+    <script src="{% static 'js/htmx.min.1.9.7.js' %}" type="application/javascript"></script>
+    <script src="{% static 'bootstrap/bootstrap.5.2.3.bundle.min.js' %}" type="application/javascript"></script>
 
 </body>
 </html>

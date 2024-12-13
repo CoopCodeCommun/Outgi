@@ -24,7 +24,7 @@ const appData = {
             { icon: 'bi bi-currency-euro', text: 'Tableaux budgétaires', link: '/suivi_budgetaire/'},
             { icon: 'bi bi-person-video2', text: 'Organigramme', link: '/organigramme/'},
             { icon: 'bi bi-cash-coin', text: 'Suivi subventions', link: '/subventions/' },
-            { icon: 'bi bi-piggy-bank', text: 'Plan de trésorerie' },]
+            { icon: 'bi bi-piggy-bank', text: 'Plan de trésorerie1' },]
         },
         { icon: 'bi bi-file-music', text: 'Suivi de projet', submenu: [
             { icon: 'bi bi-person-video2', text: 'Objectifs indicateurs', link: '/objectifs_indicateurs/'  },

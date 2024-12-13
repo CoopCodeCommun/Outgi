@@ -1,0 +1,12 @@
+{
+  "name": "dashboardraffinerie",
+  "version": "1.0.0",
+  "scripts": {
+    "build:css": "tailwindcss -i ./dashboard_app/static/css/tailwind.css -o ./dashboard_app/static/css/tailwind.output.css --watch"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.12"
+  }
+}

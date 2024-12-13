@@ -5,16 +5,16 @@
     {% include 'dashboard/tableau_generique.html' with table=tableau nom_table=nom_table %}
 {% endfor %}
 
-<section class="col-md-4" style="display: flex; align-items: stretch;">
+<section >
     <div class="p-1 case_clair">
         <div style="cursor: pointer;" _="on click toggle .d-none on the next .contentToShowHide">{{ table.titre }}</div>
         <div class="contentToShowHide">
-            <div id="tableau_content" class="h-100" style="margin: 0px;">
+            <div id="tableau_content"  >
                 <table class="no-border table-spacing" id="{{ nom_table }}">
                     <thead>
                         <tr>
                             {% for colonne in table.colonnes %}
-                                <th class="header-text">{{ colonne.nom }}</th>
+                                <th class="header-text table-column-fixed">{{ colonne.nom }}</th> <!-- Classe CSS pour fixer la largeur -->
                             {% endfor %}
                         </tr>
                    </thead>
@@ -34,28 +34,26 @@
                     {% endif %}
 
                     <tfoot>
-    {% if table.total %}
-    <tr class="case_petite total-row">
-        <td style="text-align: right; vertical-align: middle; font-weight: bold; cursor: pointer; min-width: 50px; white-space: nowrap; overflow: visible;"
-            class="header-text"
-            _="on click toggle .d-none on the previous <tbody/>">
-            + Total
-        </td>
-        {% for colonne in table.colonnes %}
-            {% if not forloop.first %}
-                <td class="total-cell case_fonce header-text"
-                    style="text-align: right; vertical-align: middle;"></td>
-            {% endif %}
-        {% endfor %}
-    </tr>
-    {% else %}
-    <tr class="case_petite total-row">
-        <td class="header-text" style="text-align: right; vertical-align: middle; font-weight: bold; cursor: pointer; min-width: 50px; white-space: nowrap; overflow: visible;">
-        </td>
-        <!-- Plus de cellules si nécessaire -->
-    </tr>
-    {% endif %}
-</tfoot>
+                        {% if table.total %}
+                        <tr class="case_petite total-row">
+                            <td style="text-align: right; vertical-align: middle; font-weight: bold; cursor: pointer; min-width: 50px; white-space: nowrap; overflow: visible;"
+                                class="header-text"
+                                _="on click toggle .d-none on the previous <tbody/>">
+                                + Tot.
+                            </td>
+                            {% for colonne in table.colonnes %}
+                                {% if not forloop.first %}
+                                    <td class="total-cell case_fonce header-text table-column-fixed"></td>
+                                {% endif %}
+                            {% endfor %}
+                        </tr>
+                        {% else %}
+                        <tr class="case_petite total-row">
+                            <td class="header-text" style="text-align: right; vertical-align: middle; font-weight: bold; cursor: pointer; min-width: 50px; white-space: nowrap; overflow: visible;">
+                            </td>
+                        </tr>
+                        {% endif %}
+                    </tfoot>
                 </table>
             </div>
         </div>

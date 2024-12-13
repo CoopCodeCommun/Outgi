@@ -1,122 +1,89 @@
 {% load static %}
 <!-- Menu Lateral -->
 
-<div class="col case">
-    <div class="container-fluid">
-        <div class="p-0 vert sidebar case row d-flex">
-            <nav class="p-0 vert sidebar case" hx-target="#main" hx-swap="outerHTML" hx-push-url="true">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column" id="sidebarMenu">
-                        <li class="nav-item">
-                        </li>
-                        <!-- D'autres éléments de menu ici -->
-                        <li class="nav-item menu-item">
-                            <button class="btn m-1 b-0"><i class="bi bi-bar-chart-line"></i><span
-                                    class="font-weight-bold"> Tableau de bord</span></button>
-                        </li>
-                        <li class="nav-item menu-item">
-                            <button class="btn m-1 b-0" _="on click toggle .open on the next <ul/>"><i
-                                    class="bi bi-currency-euro"></i><span
-                                    class="font-weight-bold">Suivi budgétaire</span></button>
-                            <ul class="submenu">
-                                <li class="submenu-item">
-                                    <a class="btn m-1 b-0" hx-get="/suivi_budgetaire/"><i class="bi bi-currency-euro"></i><span
-                                            class="font-weight-bold">Tableaux budgétaires</span></a>
-                                </li>
-                                <li class="submenu-item">
-                                    <a class="btn m-1 b-0" hx-get="/organigramme/"><i class="bi bi-person-video2"></i><span
-                                            class="font-weight-bold">Organigramme</span></a>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"  hx-get="/subventions/"><i class="bi bi-cash-coin"></i><span
-                                            class="font-weight-bold">Suivi subventions</span></button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-piggy-bank"></i><span
-                                            class="font-weight-bold sousmenusanslien"> Plan de trésorerie</span>
-                                    </button>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item menu-item">
-                            <button class="btn m-1 b-0" _="on click toggle .open on the next <ul/>"><i
-                                    class="bi bi-file-music"></i><span class="font-weight-bold"> Suivi de projet</span>
-                            </button>
-                            <ul class="submenu">
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0" hx-get="/objectifs_indicateurs/"><i class="bi bi-person-video2"></i><span
-                                            class="font-weight-bold"> Objectifs indicateurs</span></button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-file-music"></i><span
-                                            class="font-weight-bold sousmenusanslien"> Postulations</span></button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-file-music"></i><span
-                                            class="font-weight-bold sousmenusanslien"> Tâches</span></button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-file-music"></i><span
-                                            class="font-weight-bold sousmenusanslien"> Suivi évenements</span></button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-piggy-bank"></i><span
-                                            class="font-weight-bold sousmenusanslien"> Plan de trésorerie</span>
-                                    </button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-file-music"></i><span
-                                            class="font-weight-bold sousmenusanslien"> Cadre de vie</span></button>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item menu-item">
-                            <button class="btn m-1 b-0" _="on click toggle .open on the next <ul/>"><i
-                                    class="bi bi-people"></i><span class="font-weight-bold"> Raffineur.euses</span>
-                            </button>
-                            <ul class="submenu">
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0" hx-get="/repertoire/"><i class="bi bi-people"></i><span
-                                            class="font-weight-bold"> Répertoire</span></button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-list-ol"></i><span
-                                            class="font-weight-bold sousmenusanslien"> Suivi volontariat</span></button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-list-ol"></i><span
-                                            class="font-weight-bold sousmenusanslien"> Badges</span></button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-list-ol"></i><span
-                                            class="font-weight-bold sousmenusanslien"> Le calculateur de bien-être</span>
-                                    </button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0" hx-get="/tableau_de_bord_perso/"><i class="bi bi-currency-euro"></i><span
-                                            class="font-weight-bold"> tableau de bord perso</span></button>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item menu-item">
-                            <button class="btn m-1 b-0" _="on click toggle .open on the next <ul/>"><i
-                                    class="bi bi-book"></i><span class="font-weight-bold"> Boîte à outils</span>
-                            </button>
-                            <ul class="submenu">
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-book"></i><span
-                                            class="font-weight-bold sousmenusanslien"> Documentation</span></button>
-                                </li>
-                                <li class="submenu-item">
-                                    <button class="btn m-1 b-0"><i class="bi bi-file-music"></i><span
-                                            class="font-weight-bold sousmenusanslien"> outils numériques</span></button>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+<div class="flex flex-col case p-2 vert">
+    <div class="bg-vert sidebar case">
+        <nav hx-target="#main" hx-swap="outerHTML" hx-push-url="true">
+            <div class="sticky top-0">
+                
+                <!-- Tableau de bord -->
+                <div class="menu-item">
+                    <button class="submenu-item btn p-2" style="color: rgb(107, 114, 128);">
+                        Tableau de bord
+                    </button>
                 </div>
-            </nav>
-        </div>
+
+                <!-- Suivi budgétaire -->
+                <div class="menu-item">
+                    <button class="btn text-left font-bold p-2" _="on click toggle .open on the next .submenu">
+                        Suivi budgétaire
+                    </button>
+                    <div class="submenu hidden">
+                        <button class="submenu-item btn p-2" hx-get="/suivi_budgetaire/">
+                            Tableaux budgétaires
+                        </button>
+                        <button class="submenu-item btn p-2" hx-get="/organigramme/">
+                            Organigramme
+                        </button>
+                        <button class="submenu-item btn p-2" hx-get="/subventions/">
+                            Suivi subventions
+                        </button>
+                        <button class="submenu-item btn p-2" style="color: rgb(107, 114, 128);">
+                            Plan de trésorerie
+                        </button>
+                    </div>
+                </div>
+                
+
+                <!-- Suivi de projet -->
+                <div class="menu-item">
+                    <button class="btn text-left font-bold p-2" _="on click toggle .open on the next <div/>">
+                        Suivi de projet
+                    </button>
+                    <div class="submenu hidden">
+                        <button class="submenu-item btn p-2" hx-get="/objectifs_indicateurs/">
+                            Objectifs indicateurs
+                        </button>
+                        <button class="submenu-item btn p-2" style="color: rgb(107, 114, 128);">
+                            Postulations
+                        </button>
+                        <button class="submenu-item btn p-2" style="color: rgb(107, 114, 128);">
+                            Tâches
+                        </button>
+                        <button class="submenu-item btn p-2" style="color: rgb(107, 114, 128);">
+                            Suivi évenements
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Raffineur.euses -->
+                <div class="menu-item">
+                    <button class="btn text-left font-bold p-2" _="on click toggle .open on the next <div/>">
+                        Raffineur.euses
+                    </button>
+                    <div class="submenu hidden">
+                        <button class="submenu-item btn p-2" hx-get="/repertoire/">
+                            Répertoire
+                        </button>
+                        <button class="submenu-item btn p-2" style="color: rgb(107, 114, 128);">
+                            Suivi volontariat
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Boîte à outils -->
+                <div class="menu-item">
+                    <button class="btn text-left font-bold p-2" _="on click toggle .open on the next <div/>">
+                        Boîte à outils
+                    </button>
+                    <div class="submenu hidden">
+                        <button class="submenu-item btn p-2" style="color: rgb(107, 114, 128);">
+                            Documentation
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
     </div>
 </div>
-

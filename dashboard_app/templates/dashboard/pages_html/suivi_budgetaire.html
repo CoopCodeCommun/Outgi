@@ -4,210 +4,185 @@
 {% load tz %}
 
 {% block content %}
-    <!-- suivi budgétaire -->
-    <!-- membre + recap -->
-    <section class="row">
-        
-    <!-- membre du collectif -->
-    <div class="col-md-4 m-2 p-2 case rose">
+   <!-- Suivi budgétaire -->
+
+<section class="tableau">
+    <!-- Membres du Collectif -->
+    <div class="case rose adapter">
         {% include 'dashboard/section_generique.html' with titre='Membres du Collectif' %}
-            <div style="width: 100%; overflow-x: auto;">
-                {% include 'dashboard/tableau_generique.html' with table=data.membres_du_collectif %}
+        <div class="adapter">
+            {% include 'dashboard/tableau_generique.html' with table=data.membres_du_collectif %}
         </div>
     </div>
 
-    <!-- recap budget -->
-    <div class="col-md-7 p-2 m-2 case orange">
-        {% include 'dashboard/section_generique.html' with titre='Recapitulatif Budget' %}
-        <section class="row">
-            <div class="col-md-6 p-2 width: 100%; overflow-x: auto;">
+    <!-- Récapitulatif Budget -->
+    <div class="case orange adapter">
+        {% include 'dashboard/section_generique.html' with titre='Récapitulatif Budget' %}
+        <div class="flex flex-row space-x-4">
+            <!-- Tableau Dépenses -->
+            <div class="adapter">
                 {% include 'dashboard/tableau_generique.html' with table=data.recap_depenses %}
             </div>
-            <div class="col-md-6 p-2 width: 100%; overflow-x: auto;">
+            <!-- Tableau Recettes -->
+            <div class="adapter">
                 {% include 'dashboard/tableau_generique.html' with table=data.recap_recettes %}
             </div>
-        </section>
-       
+        </div>
     </div>
+</section>
 
-    </section>
+<!-- Suivi détaillé -->
 
-    <!-- Suivi détaillé -->
-    <section>
-        <section>
-            <div class="jaune p-2 my-3 case">
-                {% include 'dashboard/section_generique.html' with titre='Suivi budgétaire détaillé' %}
+<section class="case jaune px-1">
+    {% include 'dashboard/section_generique.html' with titre='Récapitulatif Budget' %}
+    <section class="flex flex-row">   
+        <!-- Colonne Dépenses -->
+        <div class="">        
+            <!-- Dépenses -->
+            <section class="adapter px-2 case case_clair">
+                {% include 'dashboard/section_generique.html' with titre='Dépenses' %}
                 <div class="contentToShowHide">
-                    <div class="row mx-1 gx-2">
-                        <!-- Dépenses -->
-                        <div class="col-md-7 p-2 case case_clair ">
-                          {% include 'dashboard/section_generique.html' with titre='Dépenses' %}
-                            <div class="contentToShowHide">
-
-                                <div class="case_clair">
-                                    <!-- bienveillance -->
-                                    <section class="px-2">
-                                        <div class="row">
-                                            <div class="col-md-4 p-2">
-                                                <div class="titre colonne_prev">
-                                                    Prévisionnel
-                                                </div>
-                                            </div>
-                                            <div class="col-md-8 p-2">
-                                                <div class="titre colonne_reel">
-                                                    Réel
-                                                </div>
-                                            </div>
-                                            {% include 'dashboard/section_generique.html' with titre='Bienveillance' %}
-                                            <div class="contentToShowHide">
-                                                <div class="row">
-                                                    <div class="col-md-4 p-2 width: 100%; overflow-x: auto;">
-                                                        {% include 'dashboard/tableau_generique.html' with table=data.bienveillance_prev %}                                                        
-                                                    </div>
-                                                    <div class="col-md-8 p-2 width: 100%; overflow-x: auto;">
-                                                        {% include 'dashboard/tableau_generique.html' with table=data.bienveillance_reel %} 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </section>
-
-                                    <!-- prestation interne -->
-                                    <section class="px-2">
-                                        {% include 'dashboard/section_generique.html' with titre='Prestations internes' %}
-                                        <div class="contentToShowHide">
-                                            <div class="row">
-                                                <div class="col-md-4 p-2">                                                    
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_int_prev %}
-                                                </div>
-                                                <div class="col-md-8 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_int_reel %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-
-                                    <!-- prestation externe -->
-                                    <section class="px-2">
-                                        {% include 'dashboard/section_generique.html' with titre='Prestations externes / achats' %}
-                                        <div class="contentToShowHide">
-                                            <div class="row">
-                                                <div class="col-md-4 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_ext_prev %}
-                                                </div>
-                                                <div class="col-md-8 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_ext_reel %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-
-                                    <!-- dépenses internes -->
-                                    <section class="px-2">
-                                        {% include 'dashboard/section_generique.html' with titre='Dépenses internes' %}
-                                        <div class="contentToShowHide">
-                                            <div class="row">
-                                                <div class="col-md-4 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.depenses_int_prev %}
-                                                </div>
-                                                <div class="col-md-8 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.depenses_int_reel %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
-                                </div>
-                            </div>
+                    <div class="adapter case_clair">
+                        <div class="flex px-2">
+                            <div class="titre colonne_prev">Prévisionnel</div>
+                            <div class="titre colonne_reel">Réel</div>
                         </div>
 
-                        <!-- recette -->
-                        <section class="col-md-5 p-2 case case_clair">
-                            {% include 'dashboard/section_generique.html' with titre='Recettes' %}
+                        <!-- Bienveillance -->
+                        <section class="adapter px-2 case case_clair">
+                            {% include 'dashboard/section_generique.html' with titre='Bienveillance' %}
                             <div class="contentToShowHide">
-                                <div class="case_clair">
-                                    <!-- Subventions aap -->
-                                    <section class="px-2">
-                                        <div class="row">
-                                            <div class="col-md-6 p-2">
-                                                <div class="titre colonne_prev">
-                                                    Prévisionnel
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 p-2">
-                                                <div class="titre colonne_reel">
-                                                    Réel
-                                                </div>
-                                            </div>
-                                            
-                                            {% include 'dashboard/section_generique.html' with titre='Subventions / Appels à projet' %}
-                                            <div class="contentToShowHide">
-                                                <div class="row">
-                                                    <div class="col-md-6 p-2">
-                                                        {% include 'dashboard/tableau_generique.html' with table=data.subvention_prev %}
-                                                    </div>
-                                                    <div class="col-md-6 p-2">
-                                                        {% include 'dashboard/tableau_generique.html' with table=data.subvention_reel %}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </section>
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.bienveillance_prev %}
+                                </div>
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.bienveillance_reel %}
+                                </div>
+                            </div>
+                        </section>
 
-                                    <!-- Prestations -->
-                                    <section class="px-2">
-                                        {% include 'dashboard/section_generique.html' with titre='Prestations' %}
-                                        <div class="contentToShowHide">
-                                            <div class="row">
-                                                <div class="col-md-6 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_prev %}
-                                                </div>
-                                                <div class="col-md-6 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_reel %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
+                        <!-- Prestations internes -->
+                        <section class="adapter px-2 case case_clair">
+                            {% include 'dashboard/section_generique.html' with titre='Prestations internes' %}
+                            <div class="contentToShowHide">
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_int_prev %}
+                                </div>
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_int_reel %}
+                                </div>
+                            </div>
+                        </section>
 
-                                    <!-- Ventes -->
-                                    <section class="px-2">
-                                        {% include 'dashboard/section_generique.html' with titre='Ventes' %}
-                                        <div class="contentToShowHide">
-                                            <div class="row">
-                                                <div class="col-md-6 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.vente_prev %}
-                                                </div>
-                                                <div class="col-md-6 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.vente_reel %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </section>
+                        <!-- Prestations externes -->
+                        <section class="adapter px-2 case case_clair">
+                            {% include 'dashboard/section_generique.html' with titre='Prestations externes / achats' %}
+                            <div class="contentToShowHide">
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_ext_prev %}
+                                </div>
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_ext_reel %}
+                                </div>
+                            </div>
+                        </section>
 
-                                    <!-- Recettes internes -->
-                                    <section class="px-2">
-                                        {% include 'dashboard/section_generique.html' with titre='Recettes internes' %}
-                                        <div class="contentToShowHide">
-                                            <div class="row">
-                                                <div class="col-md-6 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.recettes_int_prev %}
-                                                </div>
-                                                <div class="col-md-6 p-2">
-                                                    {% include 'dashboard/tableau_generique.html' with table=data.recettes_int_reel %}
-                                                </div>
-                                            </div>
-                                      </div>
-                                    </section>
+                        <!-- Dépenses internes -->
+                        <section class="adapter px-2 case case_clair">
+                            {% include 'dashboard/section_generique.html' with titre='Dépenses internes' %}
+                            <div class="contentToShowHide">
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.depenses_int_prev %}
+                                </div>
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.depenses_int_reel %}
                                 </div>
                             </div>
                         </section>
                     </div>
                 </div>
-            </div>
-        </section>
-  </section>
+            </section>
+        </div>
+
+        <!-- Colonne Recettes -->
+        <div class="">
+            <!-- Recettes générales -->
+            <section class="adapter px-2 case case_clair">
+                {% include 'dashboard/section_generique.html' with titre='Recettes' %}
+                <div class="contentToShowHide">
+                    <div class="adapter px-2 case_clair">
+                        <div class="flex">
+                            <div class="titre colonne_prev">Prévisionnel</div>
+                            <div class="titre colonne_reel">Réel</div>
+                        </div>
+
+                        <!-- Subventions / Appels à projet -->
+                        <section class="adapter px-2 case case_clair">
+                            {% include 'dashboard/section_generique.html' with titre='Subventions / Appels à projet' %}
+                            <div class="contentToShowHide">
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.subvention_prev %}
+                                </div>
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.subvention_reel %}
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Prestations -->
+                        <section class="adapter px-2 case case_clair">
+                            {% include 'dashboard/section_generique.html' with titre='Prestations' %}
+                            <div class="contentToShowHide">
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_prev %}
+                                </div>
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.presta_reel %}
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Ventes -->
+                        <section class="adapter px-2 case case_clair">
+                            {% include 'dashboard/section_generique.html' with titre='Ventes' %}
+                            <div class="contentToShowHide">
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.vente_prev %}
+                                </div>
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.vente_reel %}
+                                </div>
+                            </div>
+                        </section>
+
+                        <!-- Recettes internes -->
+                        <section class="adapter px-2 case case_clair">
+                            {% include 'dashboard/section_generique.html' with titre='Recettes internes' %}
+                            <div class="contentToShowHide">
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.recettes_int_prev %}
+                                </div>
+                                <div class="adapter">
+                                    {% include 'dashboard/tableau_generique.html' with table=data.recettes_int_reel %}
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</section>
 
 
+                                
+
+                         
+                                
+                                
+                                
 
 {% endblock content %}
 
 {% block script %}
-
 {% endblock script %}

@@ -1,0 +1,12 @@
+/* C:\Users\jgail\dashboard2\DashboardRaffinerie\dashboard_app\static\css\tailwind.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.adapter {
+  @apply inline-block max-w-fit ;
+}
+
+.tableau {
+  @apply flex p-1 space-x-3;
+}

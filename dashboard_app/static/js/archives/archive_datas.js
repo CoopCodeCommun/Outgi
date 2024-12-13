@@ -20,7 +20,7 @@ const appData = {
     sidebarOptions: [
         {icon: 'bi bi-bar-chart-line', text: 'Tableau de bord'
         },       
-        { icon: 'bi bi-currency-euro', text: 'Suivi budgétaire', submenu: [
+        { icon: 'bi bi-currency-euro', text: 'Suivi budgétaire1', submenu: [
             { icon: 'bi bi-currency-euro', text: 'Tableaux budgétaires', link: '/suivi_budgetaire/'},
             { icon: 'bi bi-person-video2', text: 'Organigramme', link: '/organigramme/'},
             { icon: 'bi bi-cash-coin', text: 'Suivi subventions', link: '/subventions/' },

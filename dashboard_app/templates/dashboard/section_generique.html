@@ -1,17 +1,15 @@
-<!-- section_generique.html -->
 <section>
-    <div style="cursor: pointer;" _="on click toggle .d-none on the next .contentToShowHide then toggle-class .plus .minus on the children of me">
-        <span class="plus">+</span>
-        <span class="minus d-none">-</span>
-        {{ titre }}
-    </div>
+    <!-- Titre -->
+    <div>
+        <span class="font-bold">{{ titre }}</span> 
+        </div>
 
-    <div class="contentToShowHide d-none">
-        <div id="tableau_content" class="case_clair">
-            <!-- Le contenu du tableau sera inclus ici avec la classe 'auto' pour l'ajustement automatique -->
+    <div>
+        <div>
             {% block tableau %}
                 <!-- Le contenu spécifique du tableau sera inséré ici -->
             {% endblock tableau %}
         </div>
     </div>
 </section>
+
